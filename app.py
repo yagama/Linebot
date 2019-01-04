@@ -260,7 +260,7 @@ def handle_message(event):
         template=CarouselTemplate(
             columns=[
                 CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/kzi5kKy.jpg',
+                    thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg',
                     title='選擇服務',
                     text='請選擇',
                     actions=[
@@ -279,7 +279,7 @@ def handle_message(event):
                     ]
                 ),
                 CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/DrsmtKS.jpg',
+                    thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
                     title='選擇服務',
                     text='請選擇',
                     actions=[

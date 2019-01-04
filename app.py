@@ -292,12 +292,12 @@ def handle_message(event):
                             text='油價查詢'
                         ),
                         URIAction(
-							label='Python Spec',
-							uri='https://docs.python.org/3/py-modindex.html'
-						)	
-					]
-				),   				
-				CarouselColumn(
+			    label='Python Spec',
+			    uri='https://docs.python.org/3/py-modindex.html'
+                        )
+                    ]
+                ),  				
+		CarouselColumn(
                     thumbnail_image_url='https://i.imgur.com/IPwI5Q1.jpg',
                     title='企鵝',
                     text='ya',

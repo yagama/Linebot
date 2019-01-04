@@ -385,7 +385,6 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 0
-		'''
     if event.message.text == "開始玩":
         buttons_template = TemplateSendMessage(
             alt_text='開始玩 template',
@@ -415,7 +414,6 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
-		'''
     if event.message.text == "新聞":
         buttons_template = TemplateSendMessage(
             alt_text='新聞 template',
@@ -512,7 +510,6 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
-		'''
     if event.message.text == "imgur bot":
         carousel_template_message = TemplateSendMessage(
             alt_text='ImageCarousel template',
@@ -532,7 +529,6 @@ def handle_message(event):
             event.reply_token,
             carousel_template_message)
         return 0
-		'''
     if event.message.text == "油價查詢":
         content = oil_price()
         line_bot_api.reply_message(
@@ -550,28 +546,38 @@ def handle_message(event):
                     text='請選擇',
                     actions=[
                         MessageAction(
-                            label='電影',
-                            text='電影'
+                            label='開始玩',
+                            text='開始玩'
                         ),
-                        MessageAction(
-							label='油價查詢',
-							text='油價查詢'
-						),              
-						MessageAction(
-							label='新聞',
-							text='新聞'
-						),
-						MessageAction(
-							label='正妹',
-							text='正妹'
-						),
-						MessageAction(
-							label='看廢文',
-							text='看廢文'
-						)					
+                        URIAction(
+                            label='影片介紹 阿肥bot',
+                            uri='https://youtu.be/1IxtWgWxtlE'
+                        ),
+                        URIAction(
+                            label='如何建立自己的 Line Bot',
+                            uri='https://github.com/twtrubiks/line-bot-tutorial'
+                        )
                     ]
                 ),
-				'''		
+                CarouselColumn(
+                    thumbnail_image_url='https://i.imgur.com/DrsmtKS.jpg',
+                    title='選擇服務',
+                    text='請選擇',
+                    actions=[
+                        MessageAction(
+                            label='other bot',
+                            text='imgur bot'
+                        ),
+                        MessageAction(
+                            label='油價查詢',
+                            text='油價查詢'
+                        ),
+                        URIAction(
+                            label='聯絡作者',
+                            uri='https://www.facebook.com/TWTRubiks?ref=bookmarks'
+                        )
+                    ]
+                ),
                 CarouselColumn(
                     thumbnail_image_url='https://i.imgur.com/h4UzRit.jpg',
                     title='選擇服務',
@@ -591,7 +597,6 @@ def handle_message(event):
                         )
                     ]
                 )
-				'''
             ]
         )
     )

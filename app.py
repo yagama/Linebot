@@ -260,9 +260,9 @@ def handle_message(event):
         template=CarouselTemplate(
             columns=[
                 CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg',
-                    title='選擇服務',
-                    text='請選擇',
+                    thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg?1',
+                    title='想要我',
+                    text='幫你嗎',
                     actions=[
                         MessageAction(
                             label='PTT熱門',
@@ -280,8 +280,8 @@ def handle_message(event):
                 ),
                 CarouselColumn(
                     thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
-                    title='選擇服務',
-                    text='請選擇',
+                    title='我看看',
+                    text='還有什麼',
                     actions=[
                         MessageAction(
                             label='蘋果即時',

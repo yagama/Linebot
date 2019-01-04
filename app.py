@@ -395,12 +395,8 @@ def handle_message(event):
                     text='請選擇',
                     actions=[
                         MessageAction(
-                            label='開始玩',
-                            text='開始玩'
-                        ),
-						MessageAction(
-							label='PTT熱門',
-							text='PTT熱門'
+                            label='PTT熱門',
+                            text='PTT熱門'
                         ),
                         URIAction(
                             label='影片',

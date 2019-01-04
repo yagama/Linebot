@@ -194,7 +194,7 @@ def ptt_beauty():
     all_page_url = soup.select('.btn.wide')[1]['href']
     start_page = get_page_number(all_page_url)
     page_term = 2  # crawler count
-    push_rate = 10  # 推文
+    push_rate = 30  # 推文
     index_list = []
     article_list = []
     for page in range(start_page, start_page - page_term, -1):
@@ -315,7 +315,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 0
-    if event.message.text == "PTT 表特版 近期大於 10 推的文章":
+    if event.message.text == "表特":
         content = ptt_beauty()
         line_bot_api.reply_message(
             event.reply_token,
@@ -458,8 +458,8 @@ def handle_message(event):
                 thumbnail_image_url='https://i.imgur.com/qKkE2bj.jpg',
                 actions=[
                     MessageTemplateAction(
-                        label='PTT 表特版 近期大於 10 推的文章',
-                        text='PTT 表特版 近期大於 10 推的文章'
+                        label='表特',
+                        text='表特'
                     ),
                     MessageTemplateAction(
                         label='來張 imgur 正妹圖片',
@@ -511,8 +511,8 @@ def handle_message(event):
                     text='請選擇',
                     actions=[
                         MessageAction(
-                            label='other bot',
-                            text='imgur bot'
+                            label='表特',
+                            text='表特'
                         ),
                         MessageAction(
                             label='油價查詢',

@@ -279,7 +279,8 @@ def handle_message(event):
                     ]
                 ),
                 CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
+#                    thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
+                    thumbnail_image_url='https://i.imgur.com/IPwI5Q1.jpg',
                     title='我看看',
                     text='還有什麼',
                     actions=[
@@ -292,30 +293,11 @@ def handle_message(event):
                             text='油價查詢'
                         ),
                         URIAction(
-			    label='Python Spec',
-			    uri='https://docs.python.org/3/py-modindex.html'
+                            label='Python Spec',
+                            uri='https://docs.python.org/3/py-modindex.html'
                         )
                     ]
-                ),  				
-		CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/IPwI5Q1.jpg',
-                    title='企鵝',
-                    text='ya',
-                    actions=[
-                        MessageAction(
-                            label='表特',
-                            text='表特'
-                        ),
-                        MessageAction(
-                            label='測試',
-                            text='測試'
-                        ),
-                        URIAction(
-                            label='測試',
-                            uri=' '
-                        )
-                    ]
-                ),      				
+                ),                
             ]
         )
     )

@@ -44,35 +44,6 @@ def callback():
 
     return 'ok'
 
-
-def pattern_mega(text):
-    patterns = [
-        'mega', 'mg', 'mu', 'ＭＥＧＡ', 'ＭＥ', 'ＭＵ',
-        'ｍｅ', 'ｍｕ', 'ｍｅｇａ', 'GD', 'MG', 'google',
-    ]
-    for pattern in patterns:
-        if re.search(pattern, text, re.IGNORECASE):
-            return True
-
-
-def eyny_movie():
-    target_url = 'http://www.eyny.com/forum-205-1.html'
-    print('Start parsing eynyMovie....')
-    rs = requests.session()
-    res = rs.get(target_url, verify=False)
-    soup = BeautifulSoup(res.text, 'html.parser')
-    content = ''
-    for titleURL in soup.select('.bm_c tbody .xst'):
-        if pattern_mega(titleURL.text):
-            title = titleURL.text
-            if '11379780-1-3' in titleURL['href']:
-                continue
-            link = 'http://www.eyny.com/' + titleURL['href']
-            data = '{}\n{}\n\n'.format(title, link)
-            content += data
-    return content
-
-
 def apple_news():
     target_url = 'https://tw.appledaily.com/new/realtime'
     print('Start parsing appleNews....')
@@ -198,7 +169,6 @@ def ptt_hot():
         content += '{}\n{}\n\n'.format(title, link)
     return content
 
-
 def movie():
     target_url = 'http://www.atmovies.com.tw/movie/next/0/'
     print('Start parsing movie ...')
@@ -278,73 +248,6 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 0
-    if event.message.text == "科技新報":
-        content = technews()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 0
-    if event.message.text == "PanX泛科技":
-        content = panx()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 0
-    if event.message.text == "開始玩":
-        buttons_template = TemplateSendMessage(
-            alt_text='開始玩 template',
-            template=ButtonsTemplate(
-                title='選擇服務',
-                text='請選擇',
-                thumbnail_image_url='https://i.imgur.com/xQF5dZT.jpg',
-                actions=[
-                    MessageTemplateAction(
-                        label='新聞',
-                        text='新聞'
-                    ),
-                    MessageTemplateAction(
-                        label='電影',
-                        text='電影'
-                    ),
-                    MessageTemplateAction(
-                        label='看廢文',
-                        text='看廢文'
-                    ),
-                    MessageTemplateAction(
-                        label='正妹',
-                        text='正妹'
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-        return 0
-    if event.message.text == "新聞":
-        buttons_template = TemplateSendMessage(
-            alt_text='新聞 template',
-            template=ButtonsTemplate(
-                title='新聞類型',
-                text='請選擇',
-                thumbnail_image_url='https://i.imgur.com/vkqbLnz.png',
-                actions=[
-                    MessageTemplateAction(
-                        label='蘋果即時',
-                        text='蘋果即時'
-                    ),
-                    MessageTemplateAction(
-                        label='科技新報',
-                        text='科技新報'
-                    ),
-                    MessageTemplateAction(
-                        label='PanX泛科技',
-                        text='PanX泛科技'
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-        return 0
-
     if event.message.text == "油價查詢":
         content = oil_price()
         line_bot_api.reply_message(
@@ -381,8 +284,8 @@ def handle_message(event):
                     text='請選擇',
                     actions=[
                         MessageAction(
-                            label='表特',
-                            text='表特'
+                            label='蘋果即時',
+                            text='蘋果即時'
                         ),
                         MessageAction(
                             label='油價查詢',

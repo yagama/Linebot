@@ -355,23 +355,11 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 0
-    if event.message.text == "近期上映電影":
+    if event.message.text == "電影":
         content = movie()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
-        return 0
-    if event.message.text == "觸電網-youtube":
-        target_url = 'https://www.youtube.com/user/truemovie1/videos'
-        rs = requests.session()
-        res = rs.get(target_url, verify=False)
-        soup = BeautifulSoup(res.text, 'html.parser')
-        seqs = ['https://www.youtube.com{}'.format(data.find('a')['href']) for data in soup.select('.yt-lockup-title')]
-        line_bot_api.reply_message(
-            event.reply_token, [
-                TextSendMessage(text=seqs[random.randint(0, len(seqs) - 1)]),
-                TextSendMessage(text=seqs[random.randint(0, len(seqs) - 1)])
-            ])
         return 0
     if event.message.text == "科技新報":
         content = technews()
@@ -439,31 +427,7 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
-    if event.message.text == "電影":
-        buttons_template = TemplateSendMessage(
-            alt_text='電影 template',
-            template=ButtonsTemplate(
-                title='服務類型',
-                text='請選擇',
-                thumbnail_image_url='https://i.imgur.com/sbOTJt4.png',
-                actions=[
-                    MessageTemplateAction(
-                        label='近期上映電影',
-                        text='近期上映電影'
-                    ),
-                    MessageTemplateAction(
-                        label='eyny',
-                        text='eyny'
-                    ),
-                    MessageTemplateAction(
-                        label='觸電網-youtube',
-                        text='觸電網-youtube'
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-        return 0
+
     if event.message.text == "看廢文":
         buttons_template = TemplateSendMessage(
             alt_text='看廢文 template',
@@ -510,25 +474,7 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
-    if event.message.text == "imgur bot":
-        carousel_template_message = TemplateSendMessage(
-            alt_text='ImageCarousel template',
-            template=ImageCarouselTemplate(
-                columns=[
-                    ImageCarouselColumn(
-                        image_url='https://i.imgur.com/g8zAYMq.jpg',
-                        action=URIAction(
-                            label='加我好友試玩',
-                            uri='https://line.me/R/ti/p/%40gmy1077x'
-                        ),
-                    ),
-                ]
-            )
-        )
-        line_bot_api.reply_message(
-            event.reply_token,
-            carousel_template_message)
-        return 0
+
     if event.message.text == "油價查詢":
         content = oil_price()
         line_bot_api.reply_message(
@@ -550,12 +496,12 @@ def handle_message(event):
                             text='開始玩'
                         ),
                         URIAction(
-                            label='影片介紹 阿肥bot',
-                            uri='https://youtu.be/1IxtWgWxtlE'
+                            label='影片',
+                            uri='https://youtu.be/'
                         ),
                         URIAction(
-                            label='如何建立自己的 Line Bot',
-                            uri='https://github.com/twtrubiks/line-bot-tutorial'
+                            label='Github',
+                            uri='https://github.com/yagama'
                         )
                     ]
                 ),
@@ -573,30 +519,11 @@ def handle_message(event):
                             text='油價查詢'
                         ),
                         URIAction(
-                            label='聯絡作者',
-                            uri='https://www.facebook.com/TWTRubiks?ref=bookmarks'
+                            label='Python Spec',
+                            uri='https://docs.python.org/3/py-modindex.html'
                         )
                     ]
-                ),
-                CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/h4UzRit.jpg',
-                    title='選擇服務',
-                    text='請選擇',
-                    actions=[
-                        URIAction(
-                            label='分享 bot',
-                            uri='https://line.me/R/nv/recommendOA/@vbi2716y'
-                        ),
-                        URIAction(
-                            label='PTT正妹網',
-                            uri='https://ptt-beauty-infinite-scroll.herokuapp.com/'
-                        ),
-                        URIAction(
-                            label='youtube 程式教學分享頻道',
-                            uri='https://www.youtube.com/channel/UCPhn2rCqhu0HdktsFjixahA'
-                        )
-                    ]
-                )
+                ),                
             ]
         )
     )

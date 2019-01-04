@@ -4,7 +4,7 @@ import random
 import configparser
 from bs4 import BeautifulSoup
 from flask import Flask, request, abort
-from imgurpython import ImgurClient
+# from imgurpython import ImgurClient
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -20,10 +20,10 @@ config.read("config.ini")
 
 line_bot_api = LineBotApi(config['line_bot']['Channel_Access_Token'])
 handler = WebhookHandler(config['line_bot']['Channel_Secret'])
-client_id = config['imgur_api']['Client_ID']
-client_secret = config['imgur_api']['Client_Secret']
-album_id = config['imgur_api']['Album_ID']
-API_Get_Image = config['other_api']['API_Get_Image']
+# client_id = config['imgur_api']['Client_ID']
+# client_secret = config['imgur_api']['Client_Secret']
+# album_id = config['imgur_api']['Album_ID']
+# API_Get_Image = config['other_api']['API_Get_Image']
 
 
 @app.route("/callback", methods=['POST'])
@@ -215,39 +215,6 @@ def movie():
         content += '{}\n{}\n'.format(title, link)
     return content
 
-
-def technews():
-    target_url = 'https://technews.tw/'
-    print('Start parsing movie ...')
-    rs = requests.session()
-    res = rs.get(target_url, verify=False)
-    res.encoding = 'utf-8'
-    soup = BeautifulSoup(res.text, 'html.parser')
-    content = ""
-
-    for index, data in enumerate(soup.select('article div h1.entry-title a')):
-        if index == 12:
-            return content
-        title = data.text
-        link = data['href']
-        content += '{}\n{}\n\n'.format(title, link)
-    return content
-
-
-def panx():
-    target_url = 'https://panx.asia/'
-    print('Start parsing ptt hot....')
-    rs = requests.session()
-    res = rs.get(target_url, verify=False)
-    soup = BeautifulSoup(res.text, 'html.parser')
-    content = ""
-    for data in soup.select('div.container div.row div.desc_wrap h2 a'):
-        title = data.text
-        link = data['href']
-        content += '{}\n{}\n\n'.format(title, link)
-    return content
-
-
 def oil_price():
     target_url = 'https://gas.goodlife.tw/'
     rs = requests.session()
@@ -277,28 +244,28 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 0
-    if event.message.text == "來張 imgur 正妹圖片":
-        client = ImgurClient(client_id, client_secret)
-        images = client.get_album_images(album_id)
-        index = random.randint(0, len(images) - 1)
-        url = images[index].link
-        image_message = ImageSendMessage(
-            original_content_url=url,
-            preview_image_url=url
-        )
-        line_bot_api.reply_message(
-            event.reply_token, image_message)
-        return 0
-    if event.message.text == "隨便來張正妹圖片":
-        image = requests.get(API_Get_Image)
-        url = image.json().get('Url')
-        image_message = ImageSendMessage(
-            original_content_url=url,
-            preview_image_url=url
-        )
-        line_bot_api.reply_message(
-            event.reply_token, image_message)
-        return 0
+    # if event.message.text == "來張 imgur 正妹圖片":
+        # client = ImgurClient(client_id, client_secret)
+        # images = client.get_album_images(album_id)
+        # index = random.randint(0, len(images) - 1)
+        # url = images[index].link
+        # image_message = ImageSendMessage(
+            # original_content_url=url,
+            # preview_image_url=url
+        # )
+        # line_bot_api.reply_message(
+            # event.reply_token, image_message)
+        # return 0
+    # if event.message.text == "隨便來張正妹圖片":
+        # image = requests.get(API_Get_Image)
+        # url = image.json().get('Url')
+        # image_message = ImageSendMessage(
+            # original_content_url=url,
+            # preview_image_url=url
+        # )
+        # line_bot_api.reply_message(
+            # event.reply_token, image_message)
+        # return 0
     if event.message.text == "PTT熱門":
         content = ptt_hot()
         line_bot_api.reply_message(
@@ -390,7 +357,7 @@ def handle_message(event):
         template=CarouselTemplate(
             columns=[
                 CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/kzi5kKy.jpg',
+                    thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg',
                     title='選擇服務',
                     text='請選擇',
                     actions=[
@@ -409,7 +376,7 @@ def handle_message(event):
                     ]
                 ),
                 CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/DrsmtKS.jpg',
+                    thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
                     title='選擇服務',
                     text='請選擇',
                     actions=[

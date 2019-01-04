@@ -125,8 +125,8 @@ def ptt_beauty():
     soup = BeautifulSoup(res.text, 'html.parser')
     all_page_url = soup.select('.btn.wide')[1]['href']
     start_page = get_page_number(all_page_url)
-    page_term = 2  # crawler count
-    push_rate = 30  # 推文
+    page_term = 3  # crawler count
+    push_rate = 20  # 推文
     index_list = []
     article_list = []
     for page in range(start_page, start_page - page_term, -1):
@@ -261,8 +261,8 @@ def handle_message(event):
             columns=[
                 CarouselColumn(
                     thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg?1',
-                    title='想要我',
-                    text='幫你嗎',
+                    title='Hi',
+                    text='今天好嗎',
                     actions=[
                         MessageAction(
                             label='PTT熱門',
@@ -292,11 +292,30 @@ def handle_message(event):
                             text='油價查詢'
                         ),
                         URIAction(
-                            label='Python Spec',
-                            uri='https://docs.python.org/3/py-modindex.html'
+							label='Python Spec',
+							uri='https://docs.python.org/3/py-modindex.html'
+						)	
+					]
+				),   				
+				CarouselColumn(
+                    thumbnail_image_url='https://i.imgur.com/IPwI5Q1.jpg',
+                    title='企鵝',
+                    text='ya',
+                    actions=[
+                        MessageAction(
+                            label='表特',
+                            text='表特'
+                        ),
+                        MessageAction(
+                            label='測試',
+                            text='測試'
+                        ),
+                        URIAction(
+                            label='測試',
+                            uri=' '
                         )
                     ]
-                ),                
+                ),      				
             ]
         )
     )

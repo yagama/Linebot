@@ -148,45 +148,6 @@ def crawl_page_gossiping(res):
             print('delete', e)
     return article_gossiping_seq
 
-
-def ptt_gossiping():
-    rs = requests.session()
-    load = {
-        'from': '/bbs/Gossiping/index.html',
-        'yes': 'yes'
-    }
-    res = rs.post('https://www.ptt.cc/ask/over18', verify=False, data=load)
-    soup = BeautifulSoup(res.text, 'html.parser')
-    all_page_url = soup.select('.btn.wide')[1]['href']
-    start_page = get_page_number(all_page_url)
-    index_list = []
-    article_gossiping = []
-    for page in range(start_page, start_page - 2, -1):
-        page_url = 'https://www.ptt.cc/bbs/Gossiping/index{}.html'.format(page)
-        index_list.append(page_url)
-
-    # 抓取 文章標題 網址 推文數
-    while index_list:
-        index = index_list.pop(0)
-        res = rs.get(index, verify=False)
-        # 如網頁忙線中,則先將網頁加入 index_list 並休息1秒後再連接
-        if res.status_code != 200:
-            index_list.append(index)
-            # print u'error_URL:',index
-            # time.sleep(1)
-        else:
-            article_gossiping = crawl_page_gossiping(res)
-            # print u'OK_URL:', index
-            # time.sleep(0.05)
-    content = ''
-    for index, article in enumerate(article_gossiping, 0):
-        if index == 15:
-            return content
-        data = '{}\n{}\n\n'.format(article.get('title', None), article.get('url_link', None))
-        content += data
-    return content
-
-
 def ptt_beauty():
     rs = requests.session()
     res = rs.get('https://www.ptt.cc/bbs/Beauty/index.html', verify=False)
@@ -303,13 +264,8 @@ def oil_price():
 def handle_message(event):
     print("event.reply_token:", event.reply_token)
     print("event.message.text:", event.message.text)
-    if event.message.text.lower() == "eyny":
-        content = eyny_movie()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 0
-    if event.message.text == "蘋果即時新聞":
+
+    if event.message.text == "蘋果即時":
         content = apple_news()
         line_bot_api.reply_message(
             event.reply_token,
@@ -343,14 +299,8 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token, image_message)
         return 0
-    if event.message.text == "近期熱門廢文":
+    if event.message.text == "PTT熱門":
         content = ptt_hot()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
-        return 0
-    if event.message.text == "即時廢文":
-        content = ptt_gossiping()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
@@ -411,8 +361,8 @@ def handle_message(event):
                 thumbnail_image_url='https://i.imgur.com/vkqbLnz.png',
                 actions=[
                     MessageTemplateAction(
-                        label='蘋果即時新聞',
-                        text='蘋果即時新聞'
+                        label='蘋果即時',
+                        text='蘋果即時'
                     ),
                     MessageTemplateAction(
                         label='科技新報',
@@ -421,53 +371,6 @@ def handle_message(event):
                     MessageTemplateAction(
                         label='PanX泛科技',
                         text='PanX泛科技'
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-        return 0
-
-    if event.message.text == "看廢文":
-        buttons_template = TemplateSendMessage(
-            alt_text='看廢文 template',
-            template=ButtonsTemplate(
-                title='你媽知道你在看廢文嗎',
-                text='請選擇',
-                thumbnail_image_url='https://i.imgur.com/ocmxAdS.jpg',
-                actions=[
-                    MessageTemplateAction(
-                        label='近期熱門廢文',
-                        text='近期熱門廢文'
-                    ),
-                    MessageTemplateAction(
-                        label='即時廢文',
-                        text='即時廢文'
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-        return 0
-    if event.message.text == "正妹":
-        buttons_template = TemplateSendMessage(
-            alt_text='正妹 template',
-            template=ButtonsTemplate(
-                title='選擇服務',
-                text='請選擇',
-                thumbnail_image_url='https://i.imgur.com/qKkE2bj.jpg',
-                actions=[
-                    MessageTemplateAction(
-                        label='表特',
-                        text='表特'
-                    ),
-                    MessageTemplateAction(
-                        label='來張 imgur 正妹圖片',
-                        text='來張 imgur 正妹圖片'
-                    ),
-                    MessageTemplateAction(
-                        label='隨便來張正妹圖片',
-                        text='隨便來張正妹圖片'
                     )
                 ]
             )
@@ -494,6 +397,10 @@ def handle_message(event):
                         MessageAction(
                             label='開始玩',
                             text='開始玩'
+                        ),
+						MessageAction(
+							label='PTT熱門',
+							text='PTT熱門'
                         ),
                         URIAction(
                             label='影片',

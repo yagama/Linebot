@@ -214,28 +214,6 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 0
-    # if event.message.text == "來張 imgur 正妹圖片":
-        # client = ImgurClient(client_id, client_secret)
-        # images = client.get_album_images(album_id)
-        # index = random.randint(0, len(images) - 1)
-        # url = images[index].link
-        # image_message = ImageSendMessage(
-            # original_content_url=url,
-            # preview_image_url=url
-        # )
-        # line_bot_api.reply_message(
-            # event.reply_token, image_message)
-        # return 0
-    # if event.message.text == "隨便來張正妹圖片":
-        # image = requests.get(API_Get_Image)
-        # url = image.json().get('Url')
-        # image_message = ImageSendMessage(
-            # original_content_url=url,
-            # preview_image_url=url
-        # )
-        # line_bot_api.reply_message(
-            # event.reply_token, image_message)
-        # return 0
     if event.message.text == "PTT熱門":
         content = ptt_hot()
         line_bot_api.reply_message(
@@ -255,51 +233,52 @@ def handle_message(event):
             TextSendMessage(text=content))
         return 0
 
-    carousel_template_message = TemplateSendMessage(
-        alt_text='目錄 template',
-        template=CarouselTemplate(
-            columns=[
-                CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg?1',
-                    title='Hi',
-                    text='今天好嗎',
-                    actions=[
-                        MessageAction(
-                            label='PTT熱門',
-                            text='PTT熱門'
-                        ),
-                        URIAction(
-                            label='影片',
-                            uri='https://youtu.be/'
-                        ),
-                        URIAction(
-                            label='Github',
-                            uri='https://github.com/'
-                        )
-                    ]
-                ),
-                CarouselColumn(
-#                    thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
-                    thumbnail_image_url='https://i.imgur.com/IPwI5Q1.jpg',
-                    title='我看看',
-                    text='還有什麼',
-                    actions=[
-                        MessageAction(
-                            label='蘋果即時',
-                            text='蘋果即時'
-                        ),
-                        MessageAction(
-                            label='油價查詢',
-                            text='油價查詢'
-                        ),
-                        URIAction(
-                            label='Python Spec',
-                            uri='https://docs.python.org/3/py-modindex.html'
-                        )
-                    ]
-                ),                
-            ]
-        )
+    if event.message.text == "test":
+		carousel_template_message = TemplateSendMessage(
+			alt_text='目錄 template',
+			template=CarouselTemplate(
+				columns=[
+					CarouselColumn(
+						thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg?1',
+						title='Hi',
+						text='今天好嗎',
+						actions=[
+							MessageAction(
+								label='PTT熱門',
+								text='PTT熱門'
+							),
+							URIAction(
+								label='影片',
+								uri='https://youtu.be/'
+							),
+							URIAction(
+								label='Github',
+								uri='https://github.com/'
+							)
+						]
+					),
+					CarouselColumn(
+	#                    thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
+						thumbnail_image_url='https://i.imgur.com/IPwI5Q1.jpg',
+						title='我看看',
+						text='還有什麼',
+						actions=[
+							MessageAction(
+								label='蘋果即時',
+								text='蘋果即時'
+							),
+							MessageAction(
+								label='油價查詢',
+								text='油價查詢'
+							),
+							URIAction(
+								label='Python Spec',
+								uri='https://docs.python.org/3/py-modindex.html'
+							)
+						]
+					),                
+				]
+			)		
     )
 
     line_bot_api.reply_message(event.reply_token, carousel_template_message)

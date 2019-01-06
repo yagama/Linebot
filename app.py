@@ -20,11 +20,6 @@ config.read("config.ini")
 
 line_bot_api = LineBotApi(config['line_bot']['Channel_Access_Token'])
 handler = WebhookHandler(config['line_bot']['Channel_Secret'])
-# client_id = config['imgur_api']['Client_ID']
-# client_secret = config['imgur_api']['Client_Secret']
-# album_id = config['imgur_api']['Album_ID']
-# API_Get_Image = config['other_api']['API_Get_Image']
-
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -46,7 +41,7 @@ def callback():
 
 def apple_news():
     target_url = 'https://tw.appledaily.com/new/realtime'
-    print('Start parsing appleNews....')
+ #   print('Start parsing appleNews....')
     rs = requests.session()
     res = rs.get(target_url, verify=False)
     soup = BeautifulSoup(res.text, 'html.parser')
@@ -146,7 +141,7 @@ def ptt_beauty():
             article_list = craw_page(res, push_rate)
             # print u'OK_URL:', index
             # time.sleep(0.05)
-    content = ''
+    content = '三頁內超過20推的有\n'
     for article in article_list:
         data = '[{} push] {}\n{}\n\n'.format(article.get('rate', None), article.get('title', None),
                                              article.get('url', None))
@@ -196,11 +191,26 @@ def oil_price():
     content = '{}\n{}{}'.format(title, gas_price, cpc)
     return content
 
+def avgle(event):
+	AVGLE_SEARCH_VIDEOS_API_URL = 'https://api.avgle.com/v1/search/{}/{}?limit={}'
+	query = event
+	page = 0
+	limit = 5
+	response = json.loads(urllib.request.urlopen(AVGLE_SEARCH_VIDEOS_API_URL.format(urllib.parse.quote_plus(query), page, limit)).read().decode())
+	#print(response)
+    content = "以下是 "+event+" 的搜尋結果"
+#	print(len(response["response"]["videos"]))
+	if response['success']:
+		for i in range(0,len(response["response"]["videos"])):
+            content += '{}\n{}\n\n'.format(response["response"]["videos"][i]['title'], response["response"]["videos"][i]['video_url'][0:31])
+#			print("\n"+response["response"]["videos"][i]['title'])
+#			print(response["response"]["videos"][i]['video_url'][3:]+"\n")
+    return content
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print("event.reply_token:", event.reply_token)
-    print("event.message.text:", event.message.text)
+ #   print("event.reply_token:", event.reply_token)
+ #   print("event.message.text:", event.message.text)
 
     if event.message.text == "蘋果即時":
         content = apple_news()
@@ -228,6 +238,13 @@ def handle_message(event):
         return 0
     if event.message.text == "油價查詢":
         content = oil_price()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+
+    if event.message.text[0:3] == "av ":
+        content = avgle(event.message.text[3:])
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))

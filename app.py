@@ -4,6 +4,9 @@ import random
 import configparser
 from bs4 import BeautifulSoup
 from flask import Flask, request, abort
+import urllib.request
+import urllib.parse
+import json
 # from imgurpython import ImgurClient
 
 from linebot import (

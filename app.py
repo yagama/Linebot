@@ -201,14 +201,14 @@ def avgle(event):
 	limit = 5
 	response = json.loads(urllib.request.urlopen(AVGLE_SEARCH_VIDEOS_API_URL.format(urllib.parse.quote_plus(query), page, limit)).read().decode())
 	#print(response)
-    content = "以下是 "+event+" 的搜尋結果"
-#	print(len(response["response"]["videos"]))
+	content = ""
+	#	print(len(response["response"]["videos"]))
 	if response['success']:
 		for i in range(0,len(response["response"]["videos"])):
-            content += '{}\n{}\n\n'.format(response["response"]["videos"][i]['title'], response["response"]["videos"][i]['video_url'][0:31])
+			content += '{}\n{}\n\n'.format(response["response"]["videos"][i]['title'], response["response"]["videos"][i]['video_url'][0:31])
 #			print("\n"+response["response"]["videos"][i]['title'])
 #			print(response["response"]["videos"][i]['video_url'][3:]+"\n")
-    return content
+	return content
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -252,56 +252,55 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=content))
         return 0
-
-    carousel_template_message = TemplateSendMessage(
-        alt_text='目錄 template',
-        template=CarouselTemplate(
-            columns=[
-                CarouselColumn(
-                    thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg?1',
-                    title='Hi',
-                    text='今天好嗎',
-                    actions=[
-                        MessageAction(
-                            label='PTT熱門',
-                            text='PTT熱門'
-                        ),
-                        URIAction(
-                            label='影片',
-                            uri='https://youtu.be/'
-                        ),
-                        URIAction(
-                            label='Github',
-                            uri='https://github.com/'
-                        )
-                    ]
-                ),
-                CarouselColumn(
-#                    thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
-                    thumbnail_image_url='https://i.imgur.com/IPwI5Q1.jpg',
-                    title='我看看',
-                    text='還有什麼',
-                    actions=[
-                        MessageAction(
-                            label='蘋果即時',
-                            text='蘋果即時'
-                        ),
-                        MessageAction(
-                            label='油價查詢',
-                            text='油價查詢'
-                        ),
-                        URIAction(
-                            label='Python Spec',
-                            uri='https://docs.python.org/3/py-modindex.html'
-                        )
-                    ]
-                ),                
-            ]
-        )
-    )
-
-    line_bot_api.reply_message(event.reply_token, carousel_template_message)
-
+'''
+	carousel_template_message = TemplateSendMessage(
+		alt_text='目錄 template',
+		template=CarouselTemplate(
+			columns=[
+				CarouselColumn(
+					thumbnail_image_url='https://i.imgur.com/hd9gJ2v.jpg?1',
+					title='Hi',
+					text='今天好嗎',
+					actions=[
+						MessageAction(
+							label='PTT熱門',
+							text='PTT熱門'
+						),
+						URIAction(
+							label='影片',
+							uri='https://youtu.be/'
+						),
+						URIAction(
+							label='Github',
+							uri='https://github.com/'
+						)
+					]
+				),
+				CarouselColumn(
+	#                    thumbnail_image_url='https://i.imgur.com/DDAm8pC.png',
+					thumbnail_image_url='https://i.imgur.com/IPwI5Q1.jpg',
+					title='我看看',
+					text='還有什麼',
+					actions=[
+						MessageAction(
+							label='蘋果即時',
+							text='蘋果即時'
+						),
+						MessageAction(
+							label='油價查詢',
+							text='油價查詢'
+						),
+						URIAction(
+							label='Python Spec',
+							uri='https://docs.python.org/3/py-modindex.html'
+						)
+					]
+				),                
+			]
+		)
+	)
+	line_bot_api.reply_message(event.reply_token, carousel_template_message)
+'''
 
 
 

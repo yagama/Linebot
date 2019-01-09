@@ -61,15 +61,15 @@ def youtube_search(options):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
     if event.message.text[0:3] == "YT ":
+        content = ""
         content = youtube_search(event.message.text[3:])
+        content += 'test'
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
         return 0
 		
-
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker_message(event):
     print("package_id:", event.message.package_id)

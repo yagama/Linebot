@@ -61,7 +61,6 @@ def youtube_search(options):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
     if event.message.text[0:3] == "YT ":
         content = youtube_search(event.message.text[3:])
         line_bot_api.reply_message(

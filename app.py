@@ -1,7 +1,13 @@
+import requests
+import re
 import random
 import configparser
+from bs4 import BeautifulSoup
 from flask import Flask, request, abort
-from googleapiclient.discovery import build
+import urllib.request
+import urllib.parse
+import json
+# from imgurpython import ImgurClient
 
 
 from linebot import (

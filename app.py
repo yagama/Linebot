@@ -60,6 +60,19 @@ def youtube_search(options):
 
     return content
 
+def avgle(event):
+	AVGLE_SEARCH_VIDEOS_API_URL = 'https://api.avgle.com/v1/jav/{}/{}?limit={}'
+	query = event
+	page = 0
+	limit = 5
+	response = json.loads(urllib.request.urlopen(AVGLE_SEARCH_VIDEOS_API_URL.format(urllib.parse.quote_plus(query), page, limit)).read().decode())
+	#print(response)
+	content = ""
+	if response['success']:
+		for i in range(0,len(response["response"]["videos"])):
+			content += '{}\n{}\n\n'.format(response["response"]["videos"][i]['title'][0:20], response["response"]["videos"][i]['embedded_url'])
+	return content
+
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -69,6 +82,13 @@ def handle_message(event):
 	
     if event.message.text[0:3] == "YT ":
         content = youtube_search(event.message.text[3:])
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+
+    if event.message.text[0:3] == "Av ":
+        content = avgle(event.message.text[3:])
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
